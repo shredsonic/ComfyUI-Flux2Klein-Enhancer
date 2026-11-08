@@ -188,35 +188,8 @@ class Flux2KleinSectionedEncoder:
         )
 
     def _print_preview(self, sections, full_prompt, ranges, separator, hf_tok):
-        lines = ["", "=" * 70, "FLUX.2 Klein Sectioned Encoding (v2)", "=" * 70]
-        lines.append(f"Separator: {separator!r}")
-
-        if hf_tok is not None:
-            front_n = _count_tokens(hf_tok, sections["front"])
-            mid_n = _count_tokens(hf_tok, sections["mid"])
-            end_n = _count_tokens(hf_tok, sections["end"])
-            prefix_n, suffix_n = _compute_wrapper_lengths(hf_tok)
-            lines.append(f"Section token counts (HF-tokenizer-exact, no padding):")
-            lines.append(f"  FRONT: {front_n} tokens   '{sections['front']}'")
-            lines.append(f"  MID:   {mid_n} tokens   '{sections['mid']}'")
-            lines.append(f"  END:   {end_n} tokens   '{sections['end']}'")
-            lines.append(f"Klein wrapper overhead: prefix={prefix_n} suffix={suffix_n} tokens")
-        else:
-            lines.append("(HF tokenizer not accessible — token counts unavailable)")
-
-        if ranges:
-            lines.append("Encoded-sequence section ranges (used by Detail Controller):")
-            for name in ("front", "mid", "end"):
-                s, e = ranges[name]
-                lines.append(f"  {name.upper():5s}  tokens [{s}:{e})  span={e - s}")
-            lines.append("Wire this conditioning into Detail Controller — it will scale these exact ranges.")
-        else:
-            lines.append("WARNING: no section ranges computed (HF tokenizer unavailable).")
-
-        lines.append("-" * 70)
-        lines.append(f"Final prompt: {full_prompt!r}")
-        lines.append("=" * 70)
-        print("\n".join(lines))
+        # Manager privacy policy: prompt text must not enter server logs.
+        return
 
 
 NODE_CLASS_MAPPINGS = {
